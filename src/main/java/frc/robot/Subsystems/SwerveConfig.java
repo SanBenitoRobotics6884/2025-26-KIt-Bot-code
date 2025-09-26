@@ -7,15 +7,9 @@ public class SwerveConfig {
     double x = Xbox_Controller.getLeftX();
     double y = Xbox_Controller.getLeftY();
     double z=-y;
-    double SwerveSpeed = (double) (x*x+y*y);
-    double BetterSwerveSpeed = (double) (java.lang.Math.sqrt(SwerveSpeed));
-    double Movement = Xbox_Controller.getLeftX();{
-        if(x<0.01 && x>-0.01){
-            if(y<0.01 && x>-0.01){
-                BetterSwerveSpeed=0;
-    }
+   
         
-    }}
+    
     public String Version = "1.0.0.0";
     public int LastState = 3;
     public Module[] Modules = new Module[] {
