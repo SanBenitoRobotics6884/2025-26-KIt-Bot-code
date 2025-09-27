@@ -1,14 +1,8 @@
-package frc.robot.Subsystems;
-//67
-import edu.wpi.first.wpilibj.XboxController;
+package frc.robot.Swerve;
+
+import frc.robot.Constants.DriveConstants;
 
 public class SwerveConfig {
-    XboxController Xbox_Controller = new XboxController(0);
-    double x = Xbox_Controller.getLeftX();
-    double y = Xbox_Controller.getLeftY();
-    double z=-y;
-   
-        
     
     public String Version = "1.0.0.0";
     public int LastState = 3;
@@ -16,7 +10,7 @@ public class SwerveConfig {
         
 
         new Module(
-            "Front Left", 0, null,
+            DriveConstants.kFrontLeftModule, DriveConstants.kFrontLeftModuleID, DriveConstants.kModuleEncoder,
             new Motor(
                 0, "Talon FX vers. C (Device ID 0)", "Talon FX vers. C", "C280627F50374E5320202047381710FF", "Galigma",
                 new MotorType("WCP Kraken x60", 96.7, 120, 60), false
