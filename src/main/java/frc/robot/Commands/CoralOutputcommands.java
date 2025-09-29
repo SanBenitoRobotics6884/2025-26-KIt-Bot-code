@@ -4,18 +4,23 @@
 
 package frc.robot.Commands;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Subsystems.CoralOutakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralOutputcommands extends Command {
+  XboxController m_Controller;
   CoralOutakeSubsystem m_Subsystem = new CoralOutakeSubsystem();
-  double m_speed;
-  /** Creates a new CoralOutputcommands. */
-  public CoralOutputcommands(CoralOutakeSubsystem subsystem, double speed) {
-    m_Subsystem = subsystem;
-    m_speed = speed;
+  //Double m_speed;
 
+  /** Creates a new CoralOutputcommands. */
+  public CoralOutputcommands(CoralOutakeSubsystem subsystem, XboxController controller) {
+    m_Subsystem = subsystem;
+    m_Controller = controller;
+    
     addRequirements(subsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -27,7 +32,10 @@ public class CoralOutputcommands extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Subsystem.RotateThisMotor(m_speed);
+    double speedValue = m_Controller.getLeftTriggerAxis();
+    m_Subsystem.RotateThisMotor(speedValue);
+    
+    System.out.println("execute");
   }
 
   // Called once the command ends or is interrupted.

@@ -4,6 +4,8 @@
 
 package frc.robot.Subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.XboxController;
@@ -12,21 +14,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class CoralOutakeSubsystem extends SubsystemBase {
   /** Creates a new CoralOutakeSubsystem. */
   TalonFX aTalonFX;
-  XboxController sillyController;
+  // XboxController sillyController = new XboxController(0);
 
   public CoralOutakeSubsystem() {
-    aTalonFX = new TalonFX(0);
+    aTalonFX = new TalonFX(2, "Galigma Jr");
   }
  
   @Override
   public void periodic() {}
 
-  public void RotateThisMotor(double speed) {
+  public void RotateThisMotor(Double speed) {
     aTalonFX.set(speed);
-    if(sillyController.getLeftTriggerAxis() > 0.1){
+    /**if(sillyController.getLeftTriggerAxis() > 0.1){
       aTalonFX.set(1);
     } else {
       aTalonFX.set(0);
-    }
+    }*/
   }
 }

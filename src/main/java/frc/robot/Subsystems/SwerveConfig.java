@@ -1,20 +1,20 @@
 package frc.robot.Subsystems;
-//67
+//THIS IS NOT A SUBSYSTEM
 import edu.wpi.first.wpilibj.XboxController;
 
 public class SwerveConfig {
     XboxController Xbox_Controller = new XboxController(0);
-    double x = Xbox_Controller.getLeftX();
-    double y = Xbox_Controller.getLeftY();
-    double z=-y;
-   
-        
-    
+
+    /*public double x = Xbox_Controller.getLeftX();
+    public double y = Xbox_Controller.getLeftY();
+    public double z=-y;*/
+
     public String Version = "1.0.0.0";
     public int LastState = 3;
+
+    //Relates to the unique modules on the bot.
     public Module[] Modules = new Module[] {
         
-
         new Module(
             "Front Left", 0, null,
             new Motor(
@@ -223,4 +223,5 @@ public class SwerveConfig {
             this.CustomName = CustomName;
         }
     }
+
 }

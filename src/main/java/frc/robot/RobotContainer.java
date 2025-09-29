@@ -12,20 +12,23 @@ import frc.robot.Subsystems.CoralOutakeSubsystem;
 
 public class RobotContainer {
   XboxController m_Controller = new XboxController(0);
+  CoralOutakeSubsystem m_CoralSubsystem = new CoralOutakeSubsystem();
+  // CoralOutputcommands m_CoralCommand = new CoralOutputcommands(m_CoralSubsystem, m_Controller.getLeftTriggerAxis());
   
   public RobotContainer() {
-    //Sub:
-    CoralOutakeSubsystem m_CoralSubsystem = new CoralOutakeSubsystem();
-    //Command:
-    CoralOutputcommands m_CoralCommand = new CoralOutputcommands(m_CoralSubsystem, m_Controller.getLeftTriggerAxis());
-    if (m_Controller.getAButtonPressed()) {
-      m_CoralCommand.execute();
-    }
+    m_CoralSubsystem.setDefaultCommand(new CoralOutputcommands(m_CoralSubsystem, m_Controller));
 
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    System.out.println("bindings configured");
+    /** if (m_Controller.getLeftTriggerAxis() > 0) {
+      m_CoralCommand.schedule();
+      m_CoralCommand.execute();
+      System.out.println("Button A is pressed" "Coral Should be Outtaking");
+    } */
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
