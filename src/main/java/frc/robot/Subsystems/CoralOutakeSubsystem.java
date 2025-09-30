@@ -6,7 +6,7 @@ package frc.robot.Subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFX;  
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,7 +17,7 @@ public class CoralOutakeSubsystem extends SubsystemBase {
   // XboxController sillyController = new XboxController(0);
 
   public CoralOutakeSubsystem() {
-    aTalonFX = new TalonFX(2, "Galigma Jr");
+    aTalonFX = new TalonFX(41, "Galigma Jr");
   }
  
   @Override
