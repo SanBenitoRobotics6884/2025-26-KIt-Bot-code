@@ -11,13 +11,15 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import static frc.robot.Constants.CoralOutInTaker.*;
+
 public class CoralOutakeSubsystem extends SubsystemBase {
   /** Creates a new CoralOutakeSubsystem. */
   TalonFX aTalonFX;
   // XboxController sillyController = new XboxController(0);
 
   public CoralOutakeSubsystem() {
-    aTalonFX = new TalonFX(41, "Galigma Jr");
+    aTalonFX = new TalonFX(CORAL_MOTOR, OUR_CANBUS);
   }
  
   @Override
