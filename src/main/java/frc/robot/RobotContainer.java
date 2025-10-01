@@ -25,7 +25,7 @@ import frc.robot.generated.TunerConstants;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    double Maxspeed1 = MaxSpeed * 0.3;
+    double Slowmode = MaxSpeed * 0.1;
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -58,10 +58,21 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     
             )
         );
-
+        drivetrain.setDefaultCommand(
+            drivetrain.applyRequest(() -> {
+                // Use left trigger axis for slow mode
+                double slowModeThreshold = 0.2;
+                double slowMultiplier = 0.3;
+                double multiplier = (joystick.getLeftTriggerAxis() > slowModeThreshold) ? slowMultiplier : 1.0;
+    
+                return drive.withVelocityX(-joystick.getLeftY() * MaxSpeed * multiplier)
+                            .withVelocityY(-joystick.getLeftX() * MaxSpeed * multiplier)
+                            .withRotationalRate(-joystick.getRightX() * MaxAngularRate * multiplier);
+            })
+        );
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         final var idle = new SwerveRequest.Idle();
