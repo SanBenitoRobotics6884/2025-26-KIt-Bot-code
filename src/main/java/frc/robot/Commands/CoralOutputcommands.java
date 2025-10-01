@@ -8,16 +8,18 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.CoralOutakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralOutputcommands extends Command {
-  XboxController m_Controller;
+  CommandXboxController m_Controller;
+  // XboxController m_Controller;
   CoralOutakeSubsystem m_Subsystem = new CoralOutakeSubsystem();
   //Double m_speed;
 
   /** Creates a new CoralOutputcommands. */
-  public CoralOutputcommands(CoralOutakeSubsystem subsystem, XboxController controller) {
+  public CoralOutputcommands(CoralOutakeSubsystem subsystem, CommandXboxController controller) {
     m_Subsystem = subsystem;
     m_Controller = controller;
     
@@ -32,7 +34,7 @@ public class CoralOutputcommands extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speedValue = m_Controller.getLeftTriggerAxis();
+      double speedValue = m_Controller.getRightTriggerAxis();
     m_Subsystem.RotateThisMotor(speedValue);
     
     System.out.println("execute");
