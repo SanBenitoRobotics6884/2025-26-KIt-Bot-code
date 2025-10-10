@@ -9,6 +9,7 @@ public class Constants {
     public class CoralOutInTaker {
         public static final String OUR_CANBUS = "Galigma Jr";
     
-        public static final int CORAL_MOTOR = 41;
+        public static final int CORAL_MOTOR_ID = 41;
+        
     }
 }

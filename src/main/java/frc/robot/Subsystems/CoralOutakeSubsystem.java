@@ -19,14 +19,14 @@ public class CoralOutakeSubsystem extends SubsystemBase {
   // XboxController sillyController = new XboxController(0);
 
   public CoralOutakeSubsystem() {
-    aTalonFX = new TalonFX(CORAL_MOTOR, OUR_CANBUS);
+    aTalonFX = new TalonFX(CORAL_MOTOR_ID, OUR_CANBUS);
   }
  
   @Override
   public void periodic() {}
 
-  public void RotateThisMotor(Double speed) {
-    aTalonFX.set(speed);
+  public void RotateThisMotor(double speedValue1) {
+    aTalonFX.set(speedValue1);
     /**if(sillyController.getLeftTriggerAxis() > 0.1){
       aTalonFX.set(1);
     } else {

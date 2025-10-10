@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.Autocommand;
+//import frc.robot.Commands.Autocommand;
 import frc.robot.Commands.CoralOutputcommands;
 import frc.robot.Subsystems.CommandSwerveDrivetrain;
 import frc.robot.Subsystems.CoralOutakeSubsystem;
@@ -26,7 +28,7 @@ import frc.robot.generated.TunerConstants;
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     // double Slowmode = MaxSpeed * 0.1;
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -53,14 +55,20 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
+        // If playing on blue, make color = 1, if red make it -1, since red team inverts controls
+    double color = 1;
+    if(color==1){
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
+
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+            
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     
             )
         );
+    
         drivetrain.setDefaultCommand(
             drivetrain.applyRequest(() -> {
                 // Use left trigger axis for slow mode
@@ -73,6 +81,39 @@ public class RobotContainer {
                             .withRotationalRate(-joystick.getRightX() * MaxAngularRate * multiplier);
             })
         );
+    }
+    if (color == -1){
+        drivetrain.setDefaultCommand(
+            // Drivetrain will execute this command periodically
+
+            drivetrain.applyRequest(() ->
+
+                
+                drive.withVelocityX(joystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
+                    .withRotationalRate(joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)     
+            )
+        );
+    
+        drivetrain.setDefaultCommand(
+            drivetrain.applyRequest(() -> {
+                // Use left trigger axis for slow mode
+                double slowModeThreshold = 0.2;
+                double slowMultiplier = 0.3;
+                double multiplier = (joystick.getLeftTriggerAxis() > slowModeThreshold) ? slowMultiplier : 1.0;
+    
+                return drive.withVelocityX(joystick.getLeftY() * MaxSpeed * multiplier)
+                            .withVelocityY(joystick.getLeftX() * MaxSpeed * multiplier)
+                            .withRotationalRate(joystick.getRightX() * MaxAngularRate * multiplier);
+            })
+        );
+
+
+
+
+
+    }
+
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         final var idle = new SwerveRequest.Idle();
@@ -99,6 +140,9 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Commands.print("No autonomous command configured");
+        // An ExampleCommand will run in autonomous
+        //return autoChooser.getSelected()
+        System.out.println(" auto notworking");
+                return new Autocommand(drivetrain);
     }
 }
